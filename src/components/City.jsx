@@ -3,7 +3,9 @@ import sidoArr from "../assets/sidoArr";
 import { styled } from "styled-components";
 import getData from "../services/getData";
 
-function SelectSido(props) {
+function City(props) {
+  const [city, setCity] = useState();
+
   const SidoBoard = styled.ul`
     position: absolute;
     left: 0;
@@ -25,31 +27,18 @@ function SelectSido(props) {
     }
   `;
 
-  const sido = sidoArr;
-
-  const [selectSido, setSelectSido] = useState(null);
-  const [sidoData, setSidoData] = useState([]);
-
-  const createSelectSido = (e) => {
-    setSelectSido(e.target.innerHTML);
+  const selectCity = (e) => {
+    setCity(e.target.innerHTML);
   };
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getData(selectSido);
-      setSidoData(data);
-    }
-    fetchData();
-  }, [selectSido]);
-
-  useEffect(() => {
-    props.propsData(sidoData);
-  });
+    props.onchangeCity(city);
+  }, [city]);
 
   return (
     <SidoBoard>
-      {sido.map((item, index) => (
-        <SidoList onClick={createSelectSido} key={index} value={item}>
+      {sidoArr.map((item, index) => (
+        <SidoList onClick={selectCity} key={index} value={item}>
           {item}
         </SidoList>
       ))}
@@ -57,4 +46,4 @@ function SelectSido(props) {
   );
 }
 
-export default SelectSido;
+export default City;
