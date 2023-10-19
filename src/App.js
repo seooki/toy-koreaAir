@@ -4,23 +4,15 @@ import getData from "./services/getData";
 import "./styles/reset.css";
 import { styled } from "styled-components";
 import City from "./components/City";
+import { useRef } from "react";
 
 function App() {
   const Board = styled.div``;
-  const [city, setCity] = useState();
-  const [totalCount, setTotalCount] = useState();
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getData("전국");
-      setTotalCount(data.response.body.totalCount);
-    }
-    fetchData();
-  }, []);
+  const isMounted = useRef();
 
   const onchangeCity = (param) => {
-    setCity(param);
+    isMounted.current = param;
+    setCity(isMounted.current);
   };
 
   return (

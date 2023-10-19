@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import sidoArr from "../assets/sidoArr";
 import { styled } from "styled-components";
 import getData from "../services/getData";
+import { useRef } from "react";
 
 function City(props) {
   const [city, setCity] = useState();
+  const isMounted = useRef(false);
 
   const SidoBoard = styled.ul`
     position: absolute;
@@ -28,11 +30,13 @@ function City(props) {
   `;
 
   const selectCity = (e) => {
+    isMounted.current = true;
     setCity(e.target.innerHTML);
   };
 
   useEffect(() => {
-    props.onchangeCity(city);
+    if (isMounted.current == true) props.onchangeCity(city);
+    isMounted.current = false;
   }, [city]);
 
   return (
