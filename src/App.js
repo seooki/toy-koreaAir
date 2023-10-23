@@ -1,25 +1,29 @@
-import { useEffect, useState } from "react";
 import Map from "./components/Map";
-import getData from "./services/getData";
 import "./styles/reset.css";
 import { styled } from "styled-components";
 import City from "./components/City";
+import React from "react";
+import { useState } from "react";
 import { useRef } from "react";
+import { useEffect } from "react";
+import { ThemeContext } from "./context/ThemeContext";
 
 function App() {
   const Board = styled.div``;
-  const isMounted = useRef();
+  const cities = useRef();
 
-  const onchangeCity = (param) => {
-    isMounted.current = param;
-    setCity(isMounted.current);
+  const selectCity = (param) => {
+    const city = param;
+    cities.current = city;
   };
 
   return (
-    <Board>
-      <Map></Map>
-      <City onchangeCity={onchangeCity}></City>
-    </Board>
+    <ThemeContext.Provider>
+      <Board>
+        <Map cities={cities}></Map>
+        <City selectCity={selectCity}></City>
+      </Board>
+    </ThemeContext.Provider>
   );
 }
 

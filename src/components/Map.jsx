@@ -1,7 +1,10 @@
+import { useRef } from "react";
 import { useEffect } from "react";
 import { styled } from "styled-components";
 
-function Map() {
+function Map(props) {
+  const isMounted = useRef(true);
+
   const Map = styled.div`
     width: 100%;
     height: 100vh;
@@ -9,6 +12,14 @@ function Map() {
   `;
 
   const { naver } = window;
+
+  useEffect(() => {
+    if (props === undefined) {
+      console.log(undefined);
+    } else {
+      console.log(props);
+    }
+  }, [props]);
 
   useEffect(() => {
     var mapOptions = {

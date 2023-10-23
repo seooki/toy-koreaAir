@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import React from "react";
 import sidoArr from "../assets/sidoArr";
 import { styled } from "styled-components";
-import getData from "../services/getData";
-import { useRef } from "react";
 
 function City(props) {
   const [city, setCity] = useState();
@@ -35,8 +34,11 @@ function City(props) {
   };
 
   useEffect(() => {
-    if (isMounted.current == true) props.onchangeCity(city);
-    isMounted.current = false;
+    if (city === undefined) {
+      props.selectCity(null);
+    } else {
+      props.selectCity(city);
+    }
   }, [city]);
 
   return (
