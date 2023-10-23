@@ -4,9 +4,6 @@ import sidoArr from "../assets/sidoArr";
 import { styled } from "styled-components";
 
 function City(props) {
-  const [city, setCity] = useState();
-  const isMounted = useRef(false);
-
   const SidoBoard = styled.ul`
     position: absolute;
     left: 0;
@@ -28,23 +25,14 @@ function City(props) {
     }
   `;
 
-  const selectCity = (e) => {
-    isMounted.current = true;
-    setCity(e.target.innerHTML);
+  const onclickCity = (e) => {
+    props.selectCity(e.target.innerHTML);
   };
-
-  useEffect(() => {
-    if (city === undefined) {
-      props.selectCity(null);
-    } else {
-      props.selectCity(city);
-    }
-  }, [city]);
 
   return (
     <SidoBoard>
       {sidoArr.map((item, index) => (
-        <SidoList onClick={selectCity} key={index} value={item}>
+        <SidoList onClick={onclickCity} key={index} value={item}>
           {item}
         </SidoList>
       ))}

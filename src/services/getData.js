@@ -15,7 +15,7 @@ async function getData(sidoName) {
     "&" +
     encodeURIComponent("numOfRows") +
     "=" +
-    encodeURIComponent("100"); /**/
+    encodeURIComponent("200"); /**/
   queryParams +=
     "&" + encodeURIComponent("pageNo") + "=" + encodeURIComponent("1"); /**/
   queryParams +=

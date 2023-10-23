@@ -1,10 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import { styled } from "styled-components";
+import getData from "../services/getData";
+import getGeocode from "../services/getGeocode";
 
 function Map(props) {
-  const isMounted = useRef(true);
-
   const Map = styled.div`
     width: 100%;
     height: 100vh;
@@ -12,14 +12,39 @@ function Map(props) {
   `;
 
   const { naver } = window;
+  const [data, setData] = useState([]);
+  const [station, setStation] = useState([]);
+  const [geocode, setGeocode] = useState([]);
 
   useEffect(() => {
-    if (props === undefined) {
-      console.log(undefined);
-    } else {
-      console.log(props);
+    async function fetchData() {
+      if (props.city != undefined) {
+        getData(props.city).then((res) => setData(res.response.body.items));
+      }
     }
+    fetchData();
   }, [props]);
+
+  useEffect(() => {
+    setStation(
+      data.map((item) => {
+        return [item.sidoName, item.stationName];
+      })
+    );
+  }, [data]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  useEffect(() => {
+    async function fetchData() {
+      getGeocode(station).then((item) => {
+        console.log(item);
+      });
+    }
+    fetchData();
+  }, [station]);
 
   useEffect(() => {
     var mapOptions = {
@@ -31,7 +56,7 @@ function Map(props) {
       center: new naver.maps.LatLng(37.3595704, 127.105399),
       zoom: 8,
     });
-  }, []);
+  });
 
   return <Map id="map"></Map>;
 }

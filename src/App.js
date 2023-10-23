@@ -10,20 +10,17 @@ import { ThemeContext } from "./context/ThemeContext";
 
 function App() {
   const Board = styled.div``;
-  const cities = useRef();
+  const [city, setCity] = useState();
 
   const selectCity = (param) => {
-    const city = param;
-    cities.current = city;
+    setCity(param);
   };
 
   return (
-    <ThemeContext.Provider>
-      <Board>
-        <Map cities={cities}></Map>
-        <City selectCity={selectCity}></City>
-      </Board>
-    </ThemeContext.Provider>
+    <Board>
+      <Map city={city}></Map>
+      <City selectCity={selectCity}></City>
+    </Board>
   );
 }
 
