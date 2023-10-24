@@ -28,7 +28,7 @@ function Map(props) {
   useEffect(() => {
     setStation(
       data.map((item) => {
-        return [item.sidoName, item.stationName];
+        return [item.stationName];
       })
     );
   }, [data]);
@@ -38,6 +38,7 @@ function Map(props) {
   }, [data]);
 
   useEffect(() => {
+    console.log(station);
     async function fetchData() {
       getGeocode(station).then((item) => {
         console.log(item);
